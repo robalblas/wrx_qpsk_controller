@@ -46,7 +46,7 @@
  * AD-converter will select the frequency for the tuner.
  * Information is displayed on the I2C LCD-display.
  * From version 2.0 on tunersetting can also be done via the UART interface:
- * baudrate: 19200 
+ * baudrate: 38400 
  * byte  1: sync
  * bytes 2,3: 16-bits, frequency*10; byte 2=MSByte
  * byte  4: modulation; 'P'=PSK, 'Q'=QPSK
@@ -118,7 +118,7 @@ void setup()
 {
   Wire.begin();
   // Set UART for external tuner setting
-  Serial.begin(19200,SERIAL_8N1);
+  Serial.begin(38400,SERIAL_8N1);
 
   pinMode(TUNINGSWITCH, INPUT);
   pinMode(RFlevel, INPUT);
