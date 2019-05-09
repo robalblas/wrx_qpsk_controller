@@ -68,10 +68,9 @@
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h> //https://bitbucket.org/fmalpartida/new-liquidcrystal/downloads/NewliquidCrystal_1.3.4.zip
 
-#define RFlevel 0
-#define TUNINGSWITCH 1
-#define VCO 3
-// nr	naam	pin
+// Pinning code: nr=Arduino numbering for Uno
+// Digital:
+// nr	naam	pin 
 // 0	PD0	2	RXD
 // 1	PD1	3	TXD
 // 2	PD2	4
@@ -86,11 +85,28 @@
 // 11	PB3	17
 // 12	PB4	18
 // 13	PB5	19
+// 14	PC0	23
+// 15	PC1	24
+// 16	PC2	25
+// 17	PC3	26
 
-#define QPSKpuls 2
-#define MODtype 6
-#define LOCKled 4
-#define TYPEDOWNC 11
+// Alternative numbering Analog (analogRead() only!): (Not for pinMode()!)
+// nr	naam	pin 
+// 0	PC0	23
+// 1	PC1	24
+// 2	PC2	25
+// 3	PC3	26
+
+// Define analog inputs
+#define RFlevel      0    // PC0
+#define TUNINGSWITCH 1    // PC1
+#define VCO          3    // PC3
+
+// Define digital in/outputs
+#define QPSKpuls     5    // PD5
+#define MODtype      6    // PD6
+#define LOCKled      4    // PD4
+#define TYPEDOWNC   11    // PB3
 
 //LiquidCrystal_I2C lcd(0x27);  // Set the LCD I2C address
 //LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE); //PCF8574
@@ -108,7 +124,7 @@ unsigned int TuneFreq, DownConvFreq;
 String freqmessage, tuner;
 
 char freqmessage_auto[17];
-boolean mode_psk_auto;
+boolean mode_psk_auto;WRX_QPSK1700_ctrl.ino
 unsigned int TuneFreq_auto=0;
 
 int TypeDC = 1;
@@ -120,9 +136,6 @@ void setup()
   // Set UART for external tuner setting
   Serial.begin(38400,SERIAL_8N1);
 
-  pinMode(TUNINGSWITCH, INPUT);
-  pinMode(RFlevel, INPUT);
-  pinMode(VCO, INPUT);
   pinMode(TYPEDOWNC, INPUT_PULLUP);
   pinMode(MODtype, OUTPUT);
   pinMode(LOCKled, OUTPUT);
@@ -325,7 +338,7 @@ void handle_switch()
         TuneFreq = 17070;
       break;
 
-      default: // 1...4
+      default: // 1...4 
         mode_psk=HIGH;
         freqmessage = "1698.0 MHz HRPT "; // 2839 steps
         TuneFreq = 16980;
